@@ -306,10 +306,24 @@
       }
     }
   };
-  // TODO uncomment line below to test app with fake data
+
   app.updateForecastCard(initialWeatherForecast);
 
-  // TODO add startup code here
+  // startup code
+
+  app.selectedCities = localStorage.selectedCities;
+  if (app.selectedCities) {
+    app.selectedCities = JSON.parse(app.selectedCities);
+    app.selectedCities.forEach(function(city) {
+      app.getForecast(city.key, city.label);
+    });
+  } else {
+    app.updateForecastCard(initialWeatherForecast);
+    app.selectedCities = [
+      {key: initialWeatherForecast.key, label: initialWeatherForecast.label}
+    ];
+    app.saveSelectedCities();
+  }
 
   // TODO add service worker code here
 })();
