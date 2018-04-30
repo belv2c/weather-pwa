@@ -50,10 +50,13 @@
     var selected = select.options[select.selectedIndex];
     var key = selected.value;
     var label = selected.textContent;
-    // TODO init the app.selectedCities array here
-    app.getForecast(key, label);
-    // TODO push the selected city to the array and save here
-    app.toggleAddDialog(false);
+    if (!app.selectedCities) {
+      app.selectedCities = [];
+  }    
+  app.getForecast(key, label);
+  app.selectedCities.push({key: key, label: label});
+  app.saveSelectedCities();
+  app.toggleAddDialog(false);
   });
 
   document.getElementById('butAddCancel').addEventListener('click', function() {
